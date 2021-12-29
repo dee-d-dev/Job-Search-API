@@ -10,3 +10,5 @@ const {
 
 router.route("/").get(getAllJobs).post(createJob);
 router.route("/:id").get(getSingleJob).delete(deleteJob).patch(updateJob);
+
+module.exports = router;
