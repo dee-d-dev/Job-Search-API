@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema({
@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Please provide name"],
     maxlength: 50,
     minlength: 3,
+    trim: true,
   },
   email: {
     type: String,
@@ -25,5 +26,10 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+UserSchema.pre("save", async function () {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  
+});
 
 module.exports = mongoose.model("User", UserSchema);
