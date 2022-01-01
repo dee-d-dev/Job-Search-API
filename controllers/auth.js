@@ -21,8 +21,14 @@ const login = async (req, res) => {
 
   //find user by mail
   const user = await User.findOne({ email });
-  //if user with such mail is not found
+  //if mail doesnt exist
   if (!user) {
+    throw new UnauthenticatedError("Provide Credentials");
+  }
+  //check password
+  const isPasswordCorrect = await user.comparePassword({ password });
+  //if user with such mail is not found
+  if (!isPassword) {
     throw new UnauthenticatedError("Provide Credentials ");
   }
   const token = user.createJWT();
