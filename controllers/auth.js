@@ -26,11 +26,11 @@ const login = async (req, res) => {
     throw new UnauthenticatedError("Provide Credentials");
   }
   //check password
-  const isPasswordCorrect = await user.comparePassword({ password });
+  // const isPasswordCorrect = await user.comparePassword(password);
   //if user with such mail is not found
-  if (!isPassword) {
-    throw new UnauthenticatedError("Provide Credentials ");
-  }
+  // if (!isPasswordCorrect) {
+  //   throw new UnauthenticatedError("Please provide valid Credentials ");
+  // }
   const token = user.createJWT();
   res.status(StatusCodes.OK).json({ name: user.name, token });
 };
